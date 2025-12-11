@@ -1,5 +1,6 @@
 import React from 'react'
 import Features_data from "../../assets/Features_data"
+import './Features.css'
 const Features = () => {
 
   return (

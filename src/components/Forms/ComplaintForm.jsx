@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import './ComplaintForm.css'
 
 const ComplaintForm = ({ onSubmitSuccess }) => {
   const [formData, setFormData] = useState({

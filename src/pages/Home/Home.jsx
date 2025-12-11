@@ -3,7 +3,7 @@ import Features from '../../components/Cards/Features'
 import HowItWorks from '../../components/Cards/HowItWorks'
 import Stats from '../../components/Cards/Stats'
 import {Link} from "react-router-dom"
-
+import './Home.css'
 const Home = () => {
   return (
     <>
