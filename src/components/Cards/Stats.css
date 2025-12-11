@@ -1,0 +1,31 @@
+:root {
+  --primary-color: #8B4513;
+  --secondary-color: #D2691E;
+  --accent-color: #FFD700;
+  --dark-color: #2F1B0A;
+  --light-color: #F5F5DC;
+  --danger-color: #DC3545;
+  --success-color: #28A745;
+  --warning-color: #FFC107;
+  --info-color: #17A2B8;
+  --font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --transition: all 0.3s ease;
+}
+.stats {
+  background-color: var(--primary-color);
+  color: white;
+  text-align: center;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 30px;
+}
+
+.stat-item h3 {
+  font-size: 3rem;
+  margin-bottom: 10px;
+  color: var(--accent-color);
+}

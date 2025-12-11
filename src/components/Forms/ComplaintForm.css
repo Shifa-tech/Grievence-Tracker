@@ -1,0 +1,122 @@
+:root {
+  --primary-color: #8B4513;
+  --secondary-color: #D2691E;
+  --accent-color: #FFD700;
+  --dark-color: #2F1B0A;
+  --light-color: #F5F5DC;
+  --danger-color: #DC3545;
+  --success-color: #28A745;
+  --warning-color: #FFC107;
+  --info-color: #17A2B8;
+  --font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --transition: all 0.3s ease;
+}
+.complaint-form {
+  background: white;
+  padding: 40px;
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.form-group {
+  margin-bottom: 25px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: var(--primary-color);
+}
+
+.form-control {
+  width: 100%;
+  padding: 12px;
+  border: 2px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+  transition: var(--transition);
+}
+
+.form-control:focus {
+  border-color: var(--primary-color);
+  outline: none;
+}
+
+textarea.form-control {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.file-upload {
+  border: 2px dashed #ddd;
+  padding: 30px;
+  text-align: center;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.file-upload:hover {
+  border-color: var(--primary-color);
+}
+
+.upload-icon {
+  font-size: 2rem;
+  margin-bottom: 10px;
+  color: var(--primary-color);
+}
+
+.map-preview {
+  height: 200px;
+  background: #f5f5f5;
+  border-radius: 4px;
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #666;
+}
+
+.urgency-badges {
+  display: flex;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+.urgency-badge {
+  flex: 1;
+  padding: 15px;
+  border: 2px solid #ddd;
+  border-radius: 4px;
+  text-align: center;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.urgency-badge.selected {
+  border-color: var(--primary-color);
+  background-color: var(--light-color);
+}
+
+.urgency-badge.high { border-color: var(--danger-color); }
+.urgency-badge.medium { border-color: var(--warning-color); }
+.urgency-badge.low { border-color: var(--success-color); }
+
+.urgency-badge.selected.high { background-color: #ffe6e6; }
+.urgency-badge.selected.medium { background-color: #fff9e6; }
+.urgency-badge.selected.low { background-color: #e6ffe6; }
+
+.file-preview {
+  margin-top: 10px;
+}
+
+.file-preview-item {
+  padding: 8px;
+  background: #f5f5f5;
+  border-radius: 4px;
+  margin-bottom: 5px;
+}

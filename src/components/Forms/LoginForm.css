@@ -1,0 +1,75 @@
+:root {
+  --primary-color: #8B4513;
+  --secondary-color: #D2691E;
+  --accent-color: #FFD700;
+  --dark-color: #2F1B0A;
+  --light-color: #F5F5DC;
+  --danger-color: #DC3545;
+  --success-color: #28A745;
+  --warning-color: #FFC107;
+  --info-color: #17A2B8;
+  --font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --transition: all 0.3s ease;
+}
+.register-container {
+  font-family: var(--font-main);
+  margin: 40px auto; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 200px); 
+}
+
+.form-container {
+  background: #8B4513; 
+  padding: 40px;
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  max-width: 400px;
+  width: 100%;
+}
+
+.form-container h2 {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #FFC107; 
+}
+
+.input {
+  margin-bottom: 20px;
+}
+
+.input label {
+  display: block;
+  margin-bottom: 8px;
+  color: #FFD700;
+}
+
+.input input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.input input:focus {
+  border-color: #FFD700;
+}
+
+.login-link, .register-link {
+  text-align: center;
+  margin-top: 15px;
+  color: #FFC107; 
+}
+
+.login-link a, .register-link a {
+  color: #FFD700;
+  text-decoration: none;
+}
+
+.login-link a:hover, .register-link a:hover {
+  text-decoration: underline;
+}
