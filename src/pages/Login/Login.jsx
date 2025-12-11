@@ -54,7 +54,7 @@ const Login = ({ setUser }) => {
             />
           </div>
          
-          <button type="submit">Login</button>
+          <button type="submit" className='login_btn'>Login</button>
 
           <p className="login-link">
             Not Registered? <Link to="/register">Register</Link>

@@ -91,3 +91,30 @@ nav a:hover::after {
   font-size: 1.5rem;
   cursor: pointer;
 }
+btn {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: var(--transition);
+  text-align: center;
+}
+
+.btn:hover {
+  background-color: var(--secondary-color);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow);
+}
+
+.btn-secondary {
+  background-color: var(--accent-color);
+  color: var(--dark-color);
+}
+
+.btn-secondary:hover {
+  background-color: #FFE55C;
+}
