@@ -18,7 +18,6 @@ const Login = ({ setUser }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    // Simulate login
     setUser({ name: formData.username, email: `${formData.username}@circus.com` })
     navigate('/')
   }
