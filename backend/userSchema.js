@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+
 const user=new mongoose.Schema({
     role:{
         type:String,
@@ -20,3 +21,6 @@ const user=new mongoose.Schema({
         
     }
 })
+
+const User = mongoose.model('User' ,user );
+export default User;
