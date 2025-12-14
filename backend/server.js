@@ -13,9 +13,7 @@ app.use(express.json());
 
 const connectDB = async () => {
   try {
-    await mongoose.connect(process.env.uri, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
+    await mongoose.connect(process.env.DB_URI, {
     });
     console.log('✅ MongoDB Atlas Connected!');
   } catch (error) {
@@ -26,8 +24,8 @@ const connectDB = async () => {
 connectDB();
 
 app.use("/api/user",handleUser)
-app.use("/api/complaint",handlecomplaint)
+app.use("/api/complaint",handleComplaint)
 
-app.listen(process.env.port,()=>{
+app.listen(process.env.PORT,()=>{
   console.log("server is running");
 })

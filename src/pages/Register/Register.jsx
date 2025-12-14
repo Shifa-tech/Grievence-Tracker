@@ -24,11 +24,11 @@ const Register = () => {
       method:"POST",
       body:JSON.stringify(formData)
     })
+    if(!response){
+    navigate("../Dashboard/Dashboard.jsx")
+    }
     } catch (error) {
       console.log("error in register");
-    }
-    if(response.ok){
-    navigate("../Dashboard/Dashboard.jsx")
     }
   }
 

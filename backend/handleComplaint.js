@@ -3,7 +3,7 @@ import Complaint from "./complaintSchema.js"
 
 const router=express.Router();
 router.post('/',async(req,res)=>{
-    const date = new Date().toLocalString();
+    const date = new Date().toLocaleString();
     const {category,title,description,location,contactPreference,urgency,photos}=req.body;
     try{
         const complaint=new Complaint({
@@ -55,3 +55,4 @@ router.patch('/',async(req,res)=>{
         
     }
 })
+export default router

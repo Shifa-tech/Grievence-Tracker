@@ -1,11 +1,11 @@
 import express from "express"
-import User from "userSchema.js"
+import User from "./userSchema.js"
 
 const router=express.Router();
 
 router.post("/login",async(req,res)=>{
-    const [username,password]=req.body;
-    const user = await User.findOne(username);
+    const {username,password}=req.body;
+    const user = await User.findOne({username});
     if(!user) {
         return res.json({message:"Invalid Credential"})
     }
@@ -17,7 +17,7 @@ router.post("/login",async(req,res)=>{
     })
 })
 router.post("/register",async(req,res)=>{
-    const [username,email,password]=req.body;
+    const {username,email,password}=req.body;
     const user = await User.findOne(username);
     if(user) {
         return res.json({message:"Already Registered"})
@@ -34,3 +34,4 @@ router.post("/register",async(req,res)=>{
         message:"successfully registered!"
     })
 })
+export default router
