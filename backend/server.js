@@ -27,5 +27,5 @@ app.use("/api/user",handleUser)
 app.use("/api/complaint",handleComplaint)
 
 app.listen(process.env.PORT,()=>{
-  console.log("server is running");
+  console.log(`Server is running on port : ${process.env.PORT}`);
 })

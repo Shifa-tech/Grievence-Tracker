@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import './Register.css'
 const Register = () => {
+
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     username: '',
     email: '',
@@ -24,11 +26,12 @@ const Register = () => {
       method:"POST",
       body:JSON.stringify(formData)
     })
-    if(!response){
+    if(response.ok){
     navigate("../Dashboard/Dashboard.jsx")
     }
     } catch (error) {
       console.log("error in register");
+      console.error("Error at Register" , error);
     }
   }
 
