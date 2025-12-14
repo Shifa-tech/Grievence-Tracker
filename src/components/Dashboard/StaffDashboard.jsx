@@ -1,6 +1,7 @@
 // frontend/src/components/Dashboards/StaffDashboard.jsx
 import React, { useState, useEffect } from 'react';
 import { api } from '../../services/api';
+import "./StaffDashboard"
 
 const StaffDashboard = ({ user }) => {
   const [allComplaints, setAllComplaints] = useState([]);
@@ -57,8 +58,8 @@ const StaffDashboard = ({ user }) => {
           <button onClick={() => setFilter('all')} className={filter === 'all' ? 'active' : ''}>
             All ({allComplaints.length})
           </button>
-          <button onClick={() => setFilter('pending')} className={filter === 'pending' ? 'active' : ''}>
-            Pending ({allComplaints.filter(c => c.status === 'pending').length})
+          <button onClick={() => setFilter('open')} className={filter === 'open' ? 'active' : ''}>
+            Pending ({allComplaints.filter(c => c.status === 'open').length})
           </button>
           <button onClick={() => setFilter('in-progress')} className={filter === 'in-progress' ? 'active' : ''}>
             In Progress ({allComplaints.filter(c => c.status === 'in-progress').length})

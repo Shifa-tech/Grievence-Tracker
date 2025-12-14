@@ -7,8 +7,8 @@ const ComplaintForm = ({ onSubmitSuccess }) => {
     complaintTitle: '',
     complaintDescription: '',
     locationArea: '',
+    contactPreference : '',
     urgency: '',
-    contactPreference: 'email',
     photos: []
   })
 
@@ -20,13 +20,6 @@ const ComplaintForm = ({ onSubmitSuccess }) => {
     }))
   }
 
-  const handleUrgencySelect = (urgency) => {
-    setFormData(prev => ({
-      ...prev,
-      urgency
-    }))
-  }
-
   const handleFileUpload = (e) => {
     const files = Array.from(e.target.files)
     setFormData(prev => ({
@@ -35,10 +28,16 @@ const ComplaintForm = ({ onSubmitSuccess }) => {
     }))
   }
 
-  const handleSubmit = (e) => {
+  async function handleSubmit(e){
     e.preventDefault()
-    console.log('Complaint submitted:', formData)
-    onSubmitSuccess()
+    try {
+      const response = await fetch("/api/complaint",{
+      method:"POST",
+      body:JSON.stringify(formData)
+    })
+    } catch (error) {
+      console.log("error while submitting the complaint");
+    }
   }
 
   return (
@@ -118,22 +117,18 @@ const ComplaintForm = ({ onSubmitSuccess }) => {
           <div className="form-group">
             <label>Urgency Level *</label>
             <div className="urgency-badges">
-              {['high', 'medium', 'low'].map(level => (
-                <div 
-                  key={level}
-                  className={`urgency-badge ${level} ${formData.urgency === level ? 'selected' : ''}`}
-                  onClick={() => handleUrgencySelect(level)}
-                >
-                  <strong>
-                    {level === 'high' ? '🚨 High' : level === 'medium' ? '⚠️ Medium' : '✅ Low'}
-                  </strong>
-                  <p>
-                    {level === 'high' ? 'Safety hazard or major disruption' : 
-                     level === 'medium' ? 'Significant inconvenience' : 
-                     'Minor issue, no immediate impact'}
-                  </p>
-                </div>
-              ))}
+               <select 
+              className="form-control" 
+              id="urgency" 
+              name="urgency"
+              value={formData.urgency}
+              onChange={handleInputChange}
+              required>
+              <option value="">Urgency Level</option>
+              <option value="low">Low</option>
+              <option value="medium">Medium</option>
+              <option value="high">High</option>
+              </select> 
             </div>
           </div>
 

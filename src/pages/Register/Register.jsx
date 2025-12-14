@@ -1,14 +1,13 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import './Register.css'
-const Register = ({ setUser }) => {
+const Register = () => {
   const [formData, setFormData] = useState({
     username: '',
     email: '',
     password: '',
     confirmPassword: ''
   })
-  const navigate = useNavigate()
 
   const handleInputChange = (e) => {
     const { name, value } = e.target
@@ -18,15 +17,19 @@ const Register = ({ setUser }) => {
     }))
   }
 
-  const handleSubmit = (e) => {
+  async function handleSubmit(e){
     e.preventDefault()
-    if (formData.password !== formData.confirmPassword) {
-      alert('Passwords do not match!')
-      return
+    try {
+      const response=await fetch("/api/user/register",{
+      method:"POST",
+      body:JSON.stringify(formData)
+    })
+    } catch (error) {
+      console.log("error in register");
     }
-    // Simulate registration
-    setUser({ name: formData.username, email: formData.email })
-    navigate('/')
+    if(response.ok){
+    navigate("../Dashboard/Dashboard.jsx")
+    }
   }
 
   return (

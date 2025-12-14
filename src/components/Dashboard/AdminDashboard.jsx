@@ -1,5 +1,6 @@
 // frontend/src/components/Dashboards/AdminDashboard.jsx
 import React, { useState, useEffect } from 'react';
+import './AdminDashboard.css'
 
 const AdminDashboard = ({ user }) => {
   const [users, setUsers] = useState([]);
