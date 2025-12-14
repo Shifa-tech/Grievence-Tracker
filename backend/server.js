@@ -2,11 +2,13 @@ import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
 import dotenv from "dotenv"
+import handleUser from "./handleUser.js";
+import handleComplaint from "./handleComplaint.js";
 
 dotenv.config();
 
 const app=express();
-app.use(cors()); //cors is used to connect react with backened
+app.use(cors());                 //cors is used to connect react with backened
 app.use(express.json());
 
 const connectDB = async () => {
@@ -21,10 +23,11 @@ const connectDB = async () => {
     process.exit(1); 
   }
 };
+connectDB();
 
 app.use("/api/user",handleUser)
 app.use("/api/complaint",handlecomplaint)
 
 app.listen(process.env.port,()=>{
-    console.log("server is running");
+  console.log("server is running");
 })

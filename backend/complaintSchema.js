@@ -1,15 +1,10 @@
 import mongoose from 'mongoose'
 
 const complaint = new mongoose.Schema({
-    id:{
-        type: String,
-        required : true,
-        unique :true
-    },
     urgency:{
         type: String,
         required : true,
-        enum :["low" , "midium" , "high"]
+        enum :["low" , "medium" , "high"]
     },
     category:{
         type: String,
@@ -23,9 +18,8 @@ const complaint = new mongoose.Schema({
     },
     
     isAssign:{
-        type: String,
-        required : true,
-        enum : ["Yes" , "No"]
+        type: Boolean,
+        default:false
     },
     title:{
         type: String,
@@ -41,10 +35,10 @@ const complaint = new mongoose.Schema({
     },
     photos:{
         type:Array,
-
+        default :[]
     },
     submission_date:{
-        type: String,
+        type: Date,
         required : true
     },
     status:{

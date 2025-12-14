@@ -1,14 +1,12 @@
 import express from "express"
-import Complaint from "complaintSchema.js"
+import Complaint from "./complaintSchema.js"
 
 const router=express.Router();
 router.post('/',async(req,res)=>{
-    var count = 1;
     const date = new Date().toLocalString();
-    const [category,title,description,location,contactPreference,urgency,photos]=req.body;
+    const {category,title,description,location,contactPreference,urgency,photos}=req.body;
     try{
         const complaint=new Complaint({
-           id : count++,
            urgency:urgency,
            category:category,
            isAssign : "false",
@@ -40,9 +38,9 @@ router.get('/',async(req,res)=>{
         console.error(err);
     }
 })
-router.get(`/citizen/:${req.body.userId}`,async(req,res)=>{
+router.get(`/citizen/:userId`,async(req,res)=>{
         try{
-            const user_complaint = await Complaint.find({id:req.body.userId})
+            const user_complaint = await Complaint.find({userId:req.body.userId})
             if(!user_complaint)res.status(404).json({message:"Cannot retrive user complaint"})
             res.json(user_complaint)
     }catch(error){
@@ -51,7 +49,7 @@ router.get(`/citizen/:${req.body.userId}`,async(req,res)=>{
     }
 })
 router.patch('/',async(req,res)=>{
-    try{
+      try{
 
     }catch(error){
         
