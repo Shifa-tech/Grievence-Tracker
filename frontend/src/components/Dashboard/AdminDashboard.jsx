@@ -16,7 +16,7 @@ const AdminDashboard = ({ user }) => {
       const token = localStorage.getItem('token');
       
       // Fetch users
-      const usersRes = await fetch('http://localhost:5000/api/admin/users', {
+      const usersRes = await fetch('/api/admin/users', {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       const usersData = await usersRes.json();

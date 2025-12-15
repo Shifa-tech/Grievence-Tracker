@@ -24,7 +24,7 @@ const Login = () => {
   async function handleSubmit(event){
     event.preventDefault();
     try {
-      const response=await fetch("./api/user/login",{
+      const response=await fetch("/api/user/login",{
         method:"POST",
         body:JSON.stringify(formData)
       })
