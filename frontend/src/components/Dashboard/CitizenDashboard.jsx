@@ -11,10 +11,18 @@ const CitizenDashboard = ({ user }) => {
 
   const fetchUserComplaints = async () => {
     try {
-      await fetch(`/api/complaint/:${user.id}`,{
-        body:{userId:user.id},
+      const response = await fetch(`/api/complaint/${user.id}`,{
+        headers:{
+          "Accept":"application/json"
+        },
         method:"GET"
       })
+      if (response.ok) {
+      const data = await response.json();
+      setComplaints(data);
+      }else {
+        setError("Failed to fetch complaints");
+      }
     } catch (error) {
       console.error('Error fetching complaints:', error);
     } finally {
@@ -25,7 +33,7 @@ const CitizenDashboard = ({ user }) => {
   return (
     <div className="citizen-dashboard">
       <h2>🎪 Your Complaints Dashboard</h2>
-      <p>Welcome, {user.name}! Here are your submitted issues.</p>
+      <p>Welcome, {user.username}! Here are your submitted issues.</p>
       
       <div className="stats-summary">
         <div className="stat-card pending">

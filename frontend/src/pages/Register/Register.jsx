@@ -11,6 +11,8 @@ const Register = () => {
     confirmPassword: ''
   })
 
+    const [error, setError] = useState('');
+
   const handleInputChange = (e) => {
     const { name, value } = e.target
     setFormData(prev => ({
@@ -20,18 +22,33 @@ const Register = () => {
   }
 
   async function handleSubmit(e){
-    e.preventDefault()
+    e.preventDefault();
+    if (formData.password !== formData.confirmPassword) {
+      setError("Passwords do not match!");
+      return;
+    }
     try {
       const response=await fetch("/api/user/register",{
       method:"POST",
+      headers : {
+        'Content-Type' : 'application/json'
+      },
       body:JSON.stringify(formData)
     })
-    if(response.ok){
-    navigate("../Dashboard/Dashboard.jsx")
+
+    const data = await response.json();
+    console.log("Registration response data:", data);
+
+    if (response.ok) {
+      console.log("Navigating to dashboard with data:", data.data);
+      navigate("/dashboard", { state: { data: data.data } });
+    } else {
+      console.error("Registration failed:", data);
+      setError(data.message || "Registration failed");
     }
     } catch (error) {
-      console.log("error in register");
-      console.error("Error at Register" , error);
+    console.error("Fetch error:", error);
+    setError("Network error. Please try again.");
     }
   }
 
@@ -39,6 +56,7 @@ const Register = () => {
     <div className="register-container">
       <div className="form-container">  
         <h2>Register yourself</h2>
+        {error && <div className="error-message">{error}</div>}
         <form onSubmit={handleSubmit}>
           <div className="input">
             <label htmlFor="username">Username</label>

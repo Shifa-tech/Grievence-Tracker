@@ -6,7 +6,10 @@ const Header = ({ user, setUser }) => {
   const location = useLocation()
 
   const handleLogout = () => {
-    setUser(null)
+  localStorage.removeItem('user');
+  setUser(null);
+  navigate('/login');
+
   }
 
   const toggleMobileMenu = () => {

@@ -33,8 +33,12 @@ const ComplaintForm = ({ onSubmitSuccess }) => {
     try {
       const response = await fetch("/api/complaint",{
       method:"POST",
+      "Content-Type":"application/json",
       body:JSON.stringify(formData)
-    })
+    });
+    if (response.ok) {
+      onSubmitSuccess();  // Call the success callback
+    }
     } catch (error) {
       console.log("error while submitting the complaint");
     }

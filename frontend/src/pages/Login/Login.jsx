@@ -3,37 +3,39 @@ import { Link, useNavigate } from 'react-router-dom'
 import './Login.css'
 const Login = () => {
   
-  const [formData,setform]=useState({username:"",password:""})
+  const [formData,setForm]=useState({username:"",password:""})
+  const [error, setError] = useState("");
   const navigate=useNavigate();
+
   function handleInputChange(event){
-      if(event.target.name==="username"){
-        setform((prev)=>{
-          return{
-          ...prev,username:event.target.value
-          }
-        })
-      }
-      else if(event.target.name==="password"){
-        setform((prev)=>{
-          return{
-          ...prev,password:event.target.value
-          }
-        })
-      }
+      setForm(prev => ({
+      ...prev,
+      [event.target.name]: event.target.value
+    }));
   }
   async function handleSubmit(event){
     event.preventDefault();
     try {
       const response=await fetch("/api/user/login",{
         method:"POST",
+        header:{
+          "Content-Type":"application/json"
+        },
         body:JSON.stringify(formData)
       })
+      const data = await response.json();
+      
+      if (response.ok) {
+        console.log("Login successful:", data);
+        navigate("/dashboard", { state: { data: data.data } }); // Pass user data
+      } else {
+        setError(data.message || "Login failed");
+      }
     } catch (error) {
-      console.log("error in login");
+      console.log("Error in login:", error);
+      setError("Network error. Please try again.");
     }
-    if(response.ok){
-    navigate("../Dashboard/Dashboard.jsx")
-    }
+    
   }
   return (
     <div className="register-container">

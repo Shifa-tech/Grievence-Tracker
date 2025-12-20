@@ -1,7 +1,6 @@
 // frontend/src/components/Dashboards/StaffDashboard.jsx
 import React, { useState, useEffect } from 'react';
-import { api } from '../../services/api';
-import "./StaffDashboard"
+import "./StaffDashboard.css"
 
 const StaffDashboard = ({ user }) => {
   const [allComplaints, setAllComplaints] = useState([]);
