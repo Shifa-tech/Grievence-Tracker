@@ -54,7 +54,7 @@ const Header = ({ user, setUser }) => {
         <div className="auth-buttons">
           {user ? (
             <>
-              <span className="user-welcome">Welcome, {user.name}!</span>
+              <span className="user-welcome">Welcome , {user.name}!</span>
               <Link to="/submit-complaint" className="btn">Report Issue</Link>
               <button onClick={handleLogout} className="btn btn-secondary">Logout</button>
             </>
