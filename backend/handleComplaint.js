@@ -38,14 +38,16 @@ router.get('/',async(req,res)=>{
         console.error(err);
     }
 })
-router.get(`/complaint/:userId`,async(req,res)=>{
+
+router.get(`/:userId`,async(req,res)=>{
         try{
-            const user_complaint = await Complaint.find({userId:req.body.userId})
+            console.log("Request Arrived");
+            const userId=req.params.userId
+            const user_complaint = await Complaint.find({userId:userId})
             if(!user_complaint)res.status(404).json({message:"Cannot retrive user complaint"})
             res.json(user_complaint)
     }catch(error){
         console.log("Error in retriving user complaint");
-        
     }
 })
 router.patch('/',async(req,res)=>{

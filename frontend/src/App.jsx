@@ -14,7 +14,6 @@ const App= ()=> {
 
   return (
     <div className="App">
-      <Header user={user} setUser={setUser} />
       <main>
         <Routes>
           <Route path="/" element={<Home />} />

@@ -45,6 +45,11 @@ const complaint = new mongoose.Schema({
         type: String,
         required : true,
         enum : ["open" , "in-progress","resolved"]
+    },
+    userId:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'User',
+        required:'true'
     }
 })
 const Complaint=mongoose.model('Complaint',complaint)

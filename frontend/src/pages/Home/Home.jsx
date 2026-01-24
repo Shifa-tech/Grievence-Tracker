@@ -4,9 +4,10 @@ import HowItWorks from '../../components/Cards/HowItWorks'
 import Stats from '../../components/Cards/Stats'
 import {Link} from "react-router-dom"
 import './Home.css'
+import Header from '../../components/Master page elements/Header'
 const Home = () => {
   return (
-    <>
+    <><Header user={null}/>
       <section className="hero" id="home">
             <div className="container hero-content">
               <h2>Welcome to the Circus of Wonders Grievance Tracker</h2>

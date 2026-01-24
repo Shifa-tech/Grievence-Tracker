@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import "./CitizenDashboard.css"
+import Header from '../Master page elements/Header';
 
 const CitizenDashboard = ({ user }) => {
   const [complaints, setComplaints] = useState([]);
@@ -14,8 +15,8 @@ const CitizenDashboard = ({ user }) => {
       const response = await fetch(`/api/complaint/${user.id}`,{
         headers:{
           "Accept":"application/json",
-          "body":{userId : user.id}
         },
+
         method:"GET"
       })
       if (response.ok) {
@@ -32,6 +33,8 @@ const CitizenDashboard = ({ user }) => {
   };
 
   return (
+    <div>
+    <Header user={user} />
     <div className="citizen-dashboard">
       <h2>🎪 Your Complaints Dashboard</h2>
       <p>Welcome, {user.username}! Here are your submitted issues.</p>
@@ -77,6 +80,7 @@ const CitizenDashboard = ({ user }) => {
           ))
         )}
       </div>
+    </div>
     </div>
   );
 };
