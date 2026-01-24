@@ -1,17 +1,25 @@
-import React, { useState } from 'react'
-import { Navigate } from 'react-router-dom'
+import React, {useEffect, useState } from 'react'
+import { Navigate, useLocation } from 'react-router-dom'
 import ComplaintForm from '../../components/Forms/ComplaintForm'
 import './SubmitComplaint.css'
+import Header from '../../components/Master page elements/Header'
 
-const SubmitComplaint = ({ user }) => {
+const SubmitComplaint = () => {
   const [complaintSubmitted, setComplaintSubmitted] = useState(false)
-
+  const location=useLocation();
+  const user=location.state?.user
   if (!user) {
     return <Navigate to="/login" replace />
   }
 
+useEffect(() => {
+    console.log('complaintSubmitted changed to:', complaintSubmitted);
+  }, [complaintSubmitted]);
+
   if (complaintSubmitted) {
     return (
+      <>
+      <Header user={user}/>
       <section className="hero">
         <div className="container">
           <div className="hero-content">
@@ -25,11 +33,13 @@ const SubmitComplaint = ({ user }) => {
           </div>
         </div>
       </section>
+      </>
     )
   }
 
   return (
     <>
+      <Header user={user}/>
       <section className="hero">
         <div className="container">
           <div className="hero-content">
@@ -38,7 +48,7 @@ const SubmitComplaint = ({ user }) => {
           </div>
         </div>
       </section>
-      <ComplaintForm onSubmitSuccess={() => setComplaintSubmitted(true)} />
+      <ComplaintForm userId={user.id} onSubmitSuccess={() => setComplaintSubmitted(true)} />
     </>
   )
 }

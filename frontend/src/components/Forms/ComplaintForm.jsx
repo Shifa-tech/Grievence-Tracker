@@ -1,15 +1,16 @@
 import React, { useState } from 'react'
 import './ComplaintForm.css'
 
-const ComplaintForm = ({ onSubmitSuccess }) => {
+const ComplaintForm = ({ userId,onSubmitSuccess }) => {
   const [formData, setFormData] = useState({
     complaintType: '',
     complaintTitle: '',
     complaintDescription: '',
     locationArea: '',
-    contactPreference : '',
+    contactPreference : 'email',
     urgency: '',
-    photos: []
+    photos: [],
+    userId:userId
   })
 
   const handleInputChange = (e) => {
@@ -27,21 +28,44 @@ const ComplaintForm = ({ onSubmitSuccess }) => {
       photos: [...prev.photos, ...files]
     }))
   }
-
-  async function handleSubmit(e){
-    e.preventDefault()
+  const handleSubmit=async (e)=>{
+    e.preventDefault();
+   
     try {
-      const response = await fetch("/api/complaint",{
-      method:"POST",
-      "Content-Type":"application/json",
-      body:JSON.stringify(formData)
-    });
-    if (response.ok) {
-      onSubmitSuccess();  // Call the success callback
-    }
+      const submissionData = {
+        complaintType: formData.complaintType,
+        complaintTitle: formData.complaintTitle,
+        complaintDescription: formData.complaintDescription,
+        locationArea: formData.locationArea,
+        contactPreference: formData.contactPreference,
+        urgency: formData.urgency,
+        photos: [], // For now, send empty array - handle file upload separately
+        userId: userId
+      }
+      const response=await fetch("/api/complaint",{
+        method:"POST",
+        headers:{
+         "Content-type":"application/json"
+          ,"Accept": "application/json"
+        },
+        body:JSON.stringify(submissionData)
+      })
+        const data=await response.json()
+        console.log(data.message)  
     } catch (error) {
-      console.log("error while submitting the complaint");
+      console.error("complaint is not submitted");   
     }
+    setFormData({
+        complaintType: '',
+        complaintTitle: '',
+        complaintDescription: '',
+        locationArea: '',
+        contactPreference: 'email',
+        urgency: '',
+        photos: []
+      })
+
+    onSubmitSuccess();
   }
 
   return (

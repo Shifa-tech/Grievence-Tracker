@@ -2,21 +2,23 @@ import express from "express"
 import Complaint from "./complaintSchema.js"
 
 const router=express.Router();
+
 router.post('/',async(req,res)=>{
     const date = new Date().toLocaleString();
-    const {category,title,description,location,contactPreference,urgency,photos}=req.body;
+    const {complaintType,complaintTitle,complaintDescription,locationArea,contactPreference,urgency,photos,userId}=req.body;
     try{
         const complaint=new Complaint({
            urgency:urgency,
-           category:category,
-           isAssign : "false",
-           status:"Open",
-           title:title,
-           description:description,
-           location:location,
+           category:complaintType,
+           isAssign : false,
+           status:"open",
+           title:complaintTitle,
+           description:complaintDescription,
+           location:locationArea,
            photos:photos,
            contactPreference:contactPreference,
            submission_date:date,
+           userId:userId
         })
         await complaint.save();
         res.json({

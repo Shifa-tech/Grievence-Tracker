@@ -6,7 +6,7 @@ const Header = ({ user, setUser }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const location = useLocation()
 
-  
+
 
   const handleLogout = () => {
   localStorage.removeItem('user');
@@ -57,8 +57,8 @@ const Header = ({ user, setUser }) => {
         <div className="auth-buttons">
           {user ? (
             <>
-              <span className="user-welcome">Welcome , {user.name}!</span>
-              <Link to="/submit-complaint" className="btn">Report Issue</Link>
+              <div  className="user-welcome">Welcome , {user.username}!</div>
+              <Link to="/submit-complaint" state={{user:user}} className="btn">Report Issue</Link>
               <button onClick={handleLogout} className="btn btn-secondary">Logout</button>
             </>
           ) : (

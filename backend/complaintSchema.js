@@ -38,7 +38,7 @@ const complaint = new mongoose.Schema({
         default :[]
     },
     submission_date:{
-        type: Date,
+        type: String,
         required : true
     },
     status:{

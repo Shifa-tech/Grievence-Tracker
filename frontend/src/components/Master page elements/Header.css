@@ -81,6 +81,7 @@ nav a:hover::after {
 .user-welcome {
   color: var(--accent-color);
   font-weight: 500;
+  display: flex;
 }
 
 .mobile-menu-btn {

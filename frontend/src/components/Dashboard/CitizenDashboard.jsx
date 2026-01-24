@@ -16,7 +16,6 @@ const CitizenDashboard = ({ user }) => {
         headers:{
           "Accept":"application/json",
         },
-
         method:"GET"
       })
       if (response.ok) {
