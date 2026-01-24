@@ -9,7 +9,6 @@ const Header = ({ user, setUser }) => {
   localStorage.removeItem('user');
   setUser(null);
   navigate('/login');
-
   }
 
   const toggleMobileMenu = () => {

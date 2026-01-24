@@ -38,7 +38,7 @@ router.get('/',async(req,res)=>{
         console.error(err);
     }
 })
-router.get(`/citizen/:userId`,async(req,res)=>{
+router.get(`/complaint/:userId`,async(req,res)=>{
         try{
             const user_complaint = await Complaint.find({userId:req.body.userId})
             if(!user_complaint)res.status(404).json({message:"Cannot retrive user complaint"})

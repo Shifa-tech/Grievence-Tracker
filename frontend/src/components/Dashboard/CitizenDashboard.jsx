@@ -4,16 +4,17 @@ import "./CitizenDashboard.css"
 const CitizenDashboard = ({ user }) => {
   const [complaints, setComplaints] = useState([]);
   const [loading, setLoading] = useState(true);
-
   useEffect(() => {
     fetchUserComplaints();
   }, [user]);
 
   const fetchUserComplaints = async () => {
+    console.log(user.id);
     try {
       const response = await fetch(`/api/complaint/${user.id}`,{
         headers:{
-          "Accept":"application/json"
+          "Accept":"application/json",
+          "body":{userId : user.id}
         },
         method:"GET"
       })
@@ -21,7 +22,7 @@ const CitizenDashboard = ({ user }) => {
       const data = await response.json();
       setComplaints(data);
       }else {
-        setError("Failed to fetch complaints");
+        console.log("Fetching complaint failed");
       }
     } catch (error) {
       console.error('Error fetching complaints:', error);

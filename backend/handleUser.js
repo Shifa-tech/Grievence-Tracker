@@ -13,9 +13,16 @@ router.post("/login",async(req,res)=>{
 
     const user = await User.findOne({username : username});
     if(!user) {
+        console.log("User Not Found");
+        
         return res.json({message:"Invalid Credential"})
     }
+    console.log("User found with the entered username");
+    
     if(user.password!==password) {
+        console.log('====================================');
+        console.log("Password is Incorrect");
+        console.log('====================================');
         return res.json({message:"Invalid Password",
             data: {
                 id: user._id,
@@ -25,8 +32,14 @@ router.post("/login",async(req,res)=>{
             }
         })
     }
-    res.json({
-        message:"successfully logged in!"
+    res.status(200).json({
+        message:"successfully logged in!",
+        data :{
+          id: user._id,
+          role: user.role,
+          username: user.username,
+          email: user.email
+        }
     })
     }catch(err){
         console.error("Login error:", err);

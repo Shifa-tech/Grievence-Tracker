@@ -4,7 +4,7 @@ import './Login.css'
 const Login = () => {
   
   const [formData,setForm]=useState({username:"",password:""})
-  const [error, setError] = useState("");
+  const {error , setError} = useState(null);
   const navigate=useNavigate();
 
   function handleInputChange(event){
@@ -18,21 +18,21 @@ const Login = () => {
     try {
       const response=await fetch("/api/user/login",{
         method:"POST",
-        header:{
+        headers:{
           "Content-Type":"application/json"
         },
         body:JSON.stringify(formData)
       })
       const data = await response.json();
       
-      if (response.ok) {
+      if (data.message === "successfully logged in!") {
         console.log("Login successful:", data);
-        navigate("/dashboard", { state: { data: data.data } }); // Pass user data
+        navigate("/dashboard", { state: { data: data.data } }); 
       } else {
         setError(data.message || "Login failed");
       }
-    } catch (error) {
-      console.log("Error in login:", error);
+    } catch (err) {
+      console.log("Error in login:", err);
       setError("Network error. Please try again.");
     }
     
@@ -43,6 +43,7 @@ const Login = () => {
         <h2>Login</h2>
         <form onSubmit={handleSubmit}>
           <div className="input">
+            <div className="error-message">{error && <p>{error}</p>}</div>
             <label htmlFor="username">Username</label>
             <input 
               type="text" 
