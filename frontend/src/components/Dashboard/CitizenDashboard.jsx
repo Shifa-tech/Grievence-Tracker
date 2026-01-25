@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import "./CitizenDashboard.css"
 import Header from '../Master page elements/Header';
+import TrackComplaint from '../Cards/TrackComplaint';
 
 const CitizenDashboard = ({ user }) => {
   const [complaints, setComplaints] = useState([]);
@@ -64,7 +65,7 @@ const CitizenDashboard = ({ user }) => {
             <div key={complaint._id} className={`complaint-card ${complaint.urgency}`}>
               <div className="complaint-header">
                 <h4>{complaint.title}</h4>
-                <button className='btn'>View full details</button>
+                <button onClick={<TrackComplaint userComplaint={complaint}/>}className='btn'>View full details</button>
               </div>
               <div className="complaint-footer">
                 <h4 className="urgency">Urgency: {complaint.urgency}</h4>
