@@ -20,54 +20,72 @@ const ComplaintForm = ({ userId,onSubmitSuccess }) => {
       [name]: value
     }))
   }
-
-  const handleFileUpload = (e) => {
+ const handleFileUpload = (e) => {
     const files = Array.from(e.target.files)
     setFormData(prev => ({
       ...prev,
       photos: [...prev.photos, ...files]
     }))
   }
+
+  const removePhoto = (index) => {
+    setFormData(prev => ({
+      ...prev,
+      photos: prev.photos.filter((_, i) => i !== index)
+    }))
+  }
+
+    const [uploading, setUploading] = useState(false)
+
   const handleSubmit=async (e)=>{
     e.preventDefault();
    
     try {
-      const submissionData = {
-        complaintType: formData.complaintType,
-        complaintTitle: formData.complaintTitle,
-        complaintDescription: formData.complaintDescription,
-        locationArea: formData.locationArea,
-        contactPreference: formData.contactPreference,
-        urgency: formData.urgency,
-        photos: [], // For now, send empty array - handle file upload separately
-        userId: userId
+     const formDataToSend = new FormData()
+      formDataToSend.append('complaintType', formData.complaintType)
+      formDataToSend.append('complaintTitle', formData.complaintTitle)
+      formDataToSend.append('complaintDescription', formData.complaintDescription)
+      formDataToSend.append('locationArea', formData.locationArea)
+      formDataToSend.append('contactPreference', formData.contactPreference)
+      formDataToSend.append('urgency', formData.urgency)
+      formDataToSend.append('userId', userId)
+      
+      formData.photos.forEach((file, index) => {
+        formDataToSend.append('photos', file)
+      })
+      
+      const response = await fetch("/api/complaint", {
+        method: "POST",
+        body: formDataToSend
+      })
+      
+      if (response.ok) {
+        const data = await response.json();
+        console.log(data.message);
+        
+        // Reset form
+        setFormData({
+          complaintType: '',
+          complaintTitle: '',
+          complaintDescription: '',
+          locationArea: '',
+          contactPreference: 'email',
+          urgency: '',
+          photos: [],
+          userId: userId
+        });
+        
+        onSubmitSuccess();
       }
-      const response=await fetch("/api/complaint",{
-        method:"POST",
-        headers:{
-         "Content-type":"application/json"
-          ,"Accept": "application/json"
-        },
-        body:JSON.stringify(submissionData)
-      })
-        const data=await response.json()
-        console.log(data.message)  
+       else {
+        console.error("Submission failed:", await response.text())
+      }
     } catch (error) {
-      console.error("complaint is not submitted");   
+      console.error("Complaint submission failed:", error);
+    } finally {
+      setUploading(false);
     }
-    setFormData({
-        complaintType: '',
-        complaintTitle: '',
-        complaintDescription: '',
-        locationArea: '',
-        contactPreference: 'email',
-        urgency: '',
-        photos: []
-      })
-
-    onSubmitSuccess();
   }
-
   return (
     <section>
       <div className="container">
@@ -200,8 +218,8 @@ const ComplaintForm = ({ userId,onSubmitSuccess }) => {
           </div>
 
           <div className="form-actions">
-            <button type="submit" className="btn" style={{ width: '100%', padding: '15px' }}>
-              🎪 Submit Complaint
+            <button type="submit" disabled={uploading} className="btn" style={{ width: '100%', padding: '15px' }}>
+              {uploading ? 'Uploading...' : '🎪 Submit Complaint'}
             </button>
           </div>
         </form>
