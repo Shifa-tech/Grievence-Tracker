@@ -64,16 +64,11 @@ const CitizenDashboard = ({ user }) => {
             <div key={complaint._id} className={`complaint-card ${complaint.urgency}`}>
               <div className="complaint-header">
                 <h4>{complaint.title}</h4>
-                <span className={`status-badge ${complaint.status}`}>
-                  {complaint.status}
-                </span>
+                <button className='btn'>View full details</button>
               </div>
-              <p>{complaint.description}</p>
               <div className="complaint-footer">
-                <span className="urgency">Urgency: {complaint.urgency}</span>
-                <span className="date">
-                  Submitted: {new Date(complaint.createdAt).toLocaleDateString()}
-                </span>
+                <h4 className="urgency">Urgency: {complaint.urgency}</h4>
+                <h4>Status : {complaint.status}</h4>
               </div>
             </div>
           ))
