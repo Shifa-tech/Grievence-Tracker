@@ -39,7 +39,7 @@ const ComplaintForm = ({ userId,onSubmitSuccess }) => {
         locationArea: formData.locationArea,
         contactPreference: formData.contactPreference,
         urgency: formData.urgency,
-        photos: [], // For now, send empty array - handle file upload separately
+        photos: formData.photos, // For now, send empty array - handle file upload separately
         userId: userId
       }
       const response=await fetch("/api/complaint",{
