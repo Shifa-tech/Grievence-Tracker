@@ -27,7 +27,41 @@
   font-size: 2.5rem;
   margin-bottom: 5px;
 }
+/* CitizenDashboard.css - Add these styles */
 
+/* Complaint Modal Styles */
+.complaint-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000; /* Very high z-index */
+    padding: 20px;
+}
+
+.complaint-modal {
+    background: white;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 800px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.modal-content {
+    padding: 0;
+}
+
+/* Make sure body doesn't scroll when modal is open */
+body.modal-open {
+    overflow: hidden;
+}
 /* Complaint Cards */
 .complaint-card {
   background: white;

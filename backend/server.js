@@ -9,8 +9,8 @@ dotenv.config();
 
 const app=express();
 app.use(cors());                 //cors is used to connect react with backened
-app.use(express.json());
-app.use(express.urlencoded({ extended: true })); // For form data
+app.use(express.json({limit:'10mb'}));
+app.use(express.urlencoded({ extended: true,limit:'10mb' })); // For form data
 
 
 const connectDB = async () => {

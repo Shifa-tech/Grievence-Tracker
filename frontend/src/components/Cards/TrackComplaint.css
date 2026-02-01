@@ -1,0 +1,124 @@
+/* Photos Section */
+.photos-section {
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid #eee;
+}
+
+.photos-section h3 {
+  color: #333;
+  margin-bottom: 15px;
+  font-size: 20px;
+}
+
+.photos-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.photo-item {
+  width: 150px;
+}
+
+.complaint-image {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 2px solid #ddd;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.complaint-image:hover {
+  transform: scale(1.05);
+  border-color: #007bff;
+}
+
+.photo-info {
+  margin-top: 5px;
+  font-size: 12px;
+  color: #666;
+  text-align: center;
+}
+
+.no-photos {
+  color: #999;
+  font-style: italic;
+  padding: 10px;
+  background: #f8f9fa;
+  border-radius: 5px;
+}
+
+/* Image Modal */
+.image-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.9);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  position: relative;
+  max-width: 90%;
+  max-height: 90%;
+}
+
+.modal-content img {
+  max-width: 100%;
+  max-height: 80vh;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+.close-modal {
+  position: absolute;
+  top: -40px;
+  right: 0;
+  background: white;
+  color: #333;
+  border: none;
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+  font-size: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+/* TrackComplaint.css - Add/Update these styles */
+.photos-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-top: 15px;
+}
+
+.photo-item {
+  flex: 1;
+  min-width: 200px;
+  max-width: 300px;
+}
+
+.complaint-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 2px solid #ddd;
+}
+
+.photo-info {
+  text-align: center;
+  margin-top: 5px;
+  color: #666;
+  font-size: 14px;
+}

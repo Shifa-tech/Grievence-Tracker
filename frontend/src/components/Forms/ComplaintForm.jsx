@@ -20,14 +20,23 @@ const ComplaintForm = ({ userId,onSubmitSuccess }) => {
       [name]: value
     }))
   }
-
-  const handleFileUpload = (e) => {
+ const handleFileUpload = (e) => {
     const files = Array.from(e.target.files)
     setFormData(prev => ({
       ...prev,
       photos: [...prev.photos, ...files]
     }))
   }
+
+  const removePhoto = (index) => {
+    setFormData(prev => ({
+      ...prev,
+      photos: prev.photos.filter((_, i) => i !== index)
+    }))
+  }
+
+    const [uploading, setUploading] = useState(false)
+
   const handleSubmit=async (e)=>{
     e.preventDefault();
    
@@ -42,32 +51,12 @@ const ComplaintForm = ({ userId,onSubmitSuccess }) => {
         photos: formData.photos, // For now, send empty array - handle file upload separately
         userId: userId
       }
-      const response=await fetch("/api/complaint",{
-        method:"POST",
-        headers:{
-         "Content-type":"application/json"
-          ,"Accept": "application/json"
-        },
-        body:JSON.stringify(submissionData)
-      })
-        const data=await response.json()
-        console.log(data.message)  
     } catch (error) {
-      console.error("complaint is not submitted");   
+      console.error("Complaint submission failed:", error);
+    } finally {
+      setUploading(false);
     }
-    setFormData({
-        complaintType: '',
-        complaintTitle: '',
-        complaintDescription: '',
-        locationArea: '',
-        contactPreference: 'email',
-        urgency: '',
-        photos: []
-      })
-
-    onSubmitSuccess();
   }
-
   return (
     <section>
       <div className="container">
@@ -200,8 +189,8 @@ const ComplaintForm = ({ userId,onSubmitSuccess }) => {
           </div>
 
           <div className="form-actions">
-            <button type="submit" className="btn" style={{ width: '100%', padding: '15px' }}>
-              🎪 Submit Complaint
+            <button type="submit" disabled={uploading} className="btn" style={{ width: '100%', padding: '15px' }}>
+              {uploading ? 'Uploading...' : '🎪 Submit Complaint'}
             </button>
           </div>
         </form>
