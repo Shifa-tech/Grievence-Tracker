@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import './Login.css'
-const Login = () => {
+const Login = ({user,setUser}) => {
   
   const [formData,setForm]=useState({username:"",password:""})
-  const {error , setError} = useState(null);
-  const navigate=useNavigate();
+  const [error , setError] = useState(null);
+  const navigate = useNavigate();
 
   function handleInputChange(event){
       setForm(prev => ({
@@ -13,10 +13,11 @@ const Login = () => {
       [event.target.name]: event.target.value
     }));
   }
+
   async function handleSubmit(event){
     event.preventDefault();
     try {
-      const response=await fetch("/api/user/login",{
+      const response= await fetch("/api/user/login",{
         method:"POST",
         headers:{
           "Content-Type":"application/json"
@@ -27,7 +28,9 @@ const Login = () => {
       
       if (data.message === "successfully logged in!") {
         console.log("Login successful:", data);
-        navigate("/dashboard", { state: { data: data.data } }); 
+        localStorage.setItem("user", JSON.stringify(data.data))
+        setUser(data.data)
+        navigate("/dashboard"); 
       } else {
         setError(data.message || "Login failed");
       }

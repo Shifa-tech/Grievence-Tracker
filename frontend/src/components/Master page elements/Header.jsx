@@ -1,15 +1,14 @@
 import React, { useState } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation ,useNavigate} from 'react-router-dom'
 import './Header.css'
 
 const Header = ({ user, setUser }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const location = useLocation()
-
-
-
+  const navigate = useNavigate()
+  
   const handleLogout = () => {
-  localStorage.removeItem('user');
+  localStorage.clear();
   setUser(null);
   navigate('/login');
   }

@@ -1,4 +1,3 @@
-// frontend/src/components/Dashboards/AdminDashboard.jsx
 import React, { useState, useEffect } from 'react';
 import './AdminDashboard.css'
 
@@ -6,49 +5,31 @@ const AdminDashboard = ({ user }) => {
   const [users, setUsers] = useState([]);
   const [stats, setStats] = useState({});
 
-  useEffect(() => {
-    // Fetch all users and stats
-    fetchAdminData();
-  }, []);
-
-  const fetchAdminData = async () => {
-    try {
-      const token = localStorage.getItem('token');
-      
-      // Fetch users
-      const usersRes = await fetch('/api/admin/users', {
-        headers: { 'Authorization': `Bearer ${token}` }
-      });
-      const usersData = await usersRes.json();
-      setUsers(usersData);
-
-      // Fetch stats
-      const statsRes = await fetch('http://localhost:5000/api/admin/stats', {
-        headers: { 'Authorization': `Bearer ${token}` }
-      });
-      const statsData = await statsRes.json();
-      setStats(statsData);
-    } catch (error) {
-      console.error('Error fetching admin data:', error);
-    }
-  };
-
-  const updateUserRole = async (userId, newRole) => {
-    try {
-      const token = localStorage.getItem('token');
-      await fetch(`http://localhost:5000/api/admin/users/${userId}/role`, {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
+  useEffect(()=>{
+    getStaffs
+  },[])
+  async function getStaffs() {
+     try {
+      const response=await fetch('/api/user',{
+        headers:{
+          "Accept":"application/json",
         },
-        body: JSON.stringify({ role: newRole })
-      });
-      fetchAdminData(); // Refresh
-    } catch (error) {
-      console.error('Error updating role:', error);
-    }
-  };
+        method:"GET",
+      })
+      const res=response.json()
+      console.log(res);
+      
+      if(response.ok){
+        console.log("response is received successfully");
+        return res
+      }
+      
+     } catch (error) {
+        console.log(`Error while Fetching staff data ${error}`);
+        
+     }
+  }
+
 
   return (
     <div className="admin-dashboard">
@@ -58,8 +39,8 @@ const AdminDashboard = ({ user }) => {
       {/* Stats Overview */}
       <div className="admin-stats">
         <div className="stat-card">
-          <h3>{stats.totalUsers || 0}</h3>
-          <p>Total Users</p>
+          <h3>{stats.totalstaffs || 0}</h3>
+          <p>Total Staffs</p>
         </div>
         <div className="stat-card">
           <h3>{stats.totalComplaints || 0}</h3>

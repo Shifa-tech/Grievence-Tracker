@@ -7,7 +7,7 @@ import './Home.css'
 import Header from '../../components/Master page elements/Header'
 const Home = () => {
   return (
-    <><Header user={null}/>
+    <>
       <section className="hero" id="home">
             <div className="container hero-content">
               <h2>Welcome to the Circus of Wonders Grievance Tracker</h2>

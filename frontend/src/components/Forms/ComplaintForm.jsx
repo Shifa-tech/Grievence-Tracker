@@ -41,15 +41,51 @@ const ComplaintForm = ({ userId,onSubmitSuccess }) => {
     e.preventDefault();
    
     try {
-      const submissionData = {
-        complaintType: formData.complaintType,
-        complaintTitle: formData.complaintTitle,
-        complaintDescription: formData.complaintDescription,
-        locationArea: formData.locationArea,
-        contactPreference: formData.contactPreference,
-        urgency: formData.urgency,
-        photos: formData.photos, // For now, send empty array - handle file upload separately
+      const formDataToSend = new FormData();
+      
+      // Add all form fields
+      formDataToSend.append('userId', userId);
+      formDataToSend.append('complaintType', formData.complaintType);
+      formDataToSend.append('complaintTitle', formData.complaintTitle);
+      formDataToSend.append('complaintDescription', formData.complaintDescription);
+      formDataToSend.append('locationArea', formData.locationArea);
+      formDataToSend.append('contactPreference', formData.contactPreference);
+      formDataToSend.append('urgency', formData.urgency);
+      
+      formData.photos.forEach((photo, index) => {
+        formDataToSend.append(`photos`, photo);
+      });
+
+      const response = await fetch('/api/complaint', {
+        method: 'POST',
+        body: formDataToSend,
+        headers: {
+          'Accept': 'application/json',
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`Submission failed with status: ${response.status}`);
+      }
+
+      const result = await response.json();
+      console.log('Complaint submitted successfully:', result);
+      
+      // Reset form
+      setFormData({
+        complaintType: '',
+        complaintTitle: '',
+        complaintDescription: '',
+        locationArea: '',
+        contactPreference: 'email',
+        urgency: '',
+        photos: [],
         userId: userId
+      });
+      
+      // Call success callback
+      if (onSubmitSuccess) {
+        onSubmitSuccess();
       }
     } catch (error) {
       console.error("Complaint submission failed:", error);

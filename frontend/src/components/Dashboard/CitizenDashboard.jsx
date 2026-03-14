@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import "./CitizenDashboard.css"
-import Header from '../Master page elements/Header';
+import "./CitizenDashboard.css";
 import TrackComplaint from '../Cards/TrackComplaint';
-import { UNSAFE_FetchersContext } from 'react-router-dom';
 
 const CitizenDashboard = ({ user }) => {
   const [complaints, setComplaints] = useState([]);
@@ -58,7 +56,6 @@ const CitizenDashboard = ({ user }) => {
 
   return (
     <div>
-      <Header user={user} />
       <div className="citizen-dashboard">
         <h2>🎪 Your Complaints Dashboard</h2>
         <p>Welcome, {user.username}! Here are your submitted issues.</p>
