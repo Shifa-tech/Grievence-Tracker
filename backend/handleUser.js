@@ -3,7 +3,7 @@ import User from "./userSchema.js"
 
 const router=express.Router();
 
-router.get("/", async(req,res)=>{
+router.get("/staff", async(req,res)=>{
     try {
         const staff = await User.find({ role: 'staff' }).select('-password');
         console.log(staff);
@@ -15,9 +15,9 @@ router.get("/", async(req,res)=>{
         console.log("Error while fetching complaint");
         console.error(err);
     }
-} 
-    
-)
+})
+
+
 
 router.post("/login",async(req,res)=>{
     try{

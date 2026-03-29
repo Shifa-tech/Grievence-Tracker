@@ -29,8 +29,9 @@ const Login = ({user,setUser}) => {
       if (data.message === "successfully logged in!") {
         console.log("Login successful:", data);
         localStorage.setItem("user", JSON.stringify(data.data))
+        console.log(data.data)
         setUser(data.data)
-        navigate("/dashboard"); 
+        navigate("/dashboard" , {state :{user:data.data}} ); 
       } else {
         setError(data.message || "Login failed");
       }

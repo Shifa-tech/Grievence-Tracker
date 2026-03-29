@@ -20,6 +20,11 @@ const user=new mongoose.Schema({
         type:String,
         required:true,
         
+    },
+    department:{
+        type:String,
+        enum : ["road-damage" , "water-leakage" , "garbage","electrical" , "safety" , "other"],
+        default:"none"
     }
 })
 

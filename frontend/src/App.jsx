@@ -14,13 +14,13 @@ const App= ()=> {
 
   return (
     <div className="App">
-      <Header user={user} setUser={setUser}/>
+      <Header/>
       <main>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login user={user} setUser={setUser} />} />
-          <Route path="/register" element={<Register user={user} setUser={setUser} />} />
-          <Route path="/dashboard" element={<Dashboard user={user} setUser={setUser} />} />
+          <Route path="/login" element={<Login user = {user} setUser={setUser} />} />
+          <Route path="/register" element={<Register user = {user} setUser={setUser} />} />
+          <Route path="/dashboard" element={<Dashboard user = {user} setUser={setUser}/>} />
           <Route path="/submit-complaint" element={<SubmitComplaint/>} />
         </Routes>
       </main>

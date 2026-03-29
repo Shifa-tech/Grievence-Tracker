@@ -1,13 +1,16 @@
 import React ,{useEffect}from 'react'
-import { useNavigate} from "react-router-dom"
+import { useNavigate , useLocation} from "react-router-dom"
 import CitizenDashboard from "../../components/Dashboard/CitizenDashboard"
 import AdminDashboard from "../../components/Dashboard/AdminDashboard"
 import StaffDashboard from "../../components/Dashboard/StaffDashboard"
 
-const Dashboard = ({user}) => {
+const Dashboard = () => {
     const navigate = useNavigate();
+  
+    const location = useLocation()
+    const user = location.state?.user
     console.log(user);
-    
+
   useEffect(() => {
     if (!user) {
       navigate("/login");
