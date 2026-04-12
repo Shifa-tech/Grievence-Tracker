@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import StaffList from './Details/StaffList'
 import ComplaintsList from './Details/ComplaintList'
 
-const AdminDashboard = (user) => {
+const AdminDashboard = ({user}) => {
   const [sidebarOpen, setSidebarOpen] = useState(true)
   const [activeTab, setActiveTab] = useState('dashboard')
 

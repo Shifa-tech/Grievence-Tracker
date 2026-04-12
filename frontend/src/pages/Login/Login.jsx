@@ -26,11 +26,14 @@ const Login = ({user,setUser}) => {
       })
       const data = await response.json();
       
-      if (data.message === "successfully logged in!") {
+      if (data.success) {
         console.log("Login successful:", data);
+        const token = data.accessToken;
         localStorage.setItem("user", JSON.stringify(data.data))
-        console.log(data.data)
+        localStorage.setItem('accessToken', token);
         setUser(data.data)
+        console.log("✅ Login successful! Redirecting to dashboard...");
+
         navigate("/dashboard" , {state :{user:data.data}} ); 
       } else {
         setError(data.message || "Login failed");
@@ -40,6 +43,11 @@ const Login = ({user,setUser}) => {
       setError("Network error. Please try again.");
     }
     
+  }
+
+   if (user) {
+    navigate("/dashboard");
+    return null;
   }
   return (
     <div className="register-container">

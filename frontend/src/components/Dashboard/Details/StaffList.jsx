@@ -24,14 +24,32 @@ const StaffList = () => {
   }
 
   const handleAddStaff = async (staffData) => {
+    console.log(" Received in handleAddStaff:", staffData)  
+    if (!staffData || !staffData.username || !staffData.email || !staffData.password) {
+        console.error(" Missing required fields:", staffData)
+        alert("Please fill all required fields")
+        return
+    }
     try {
-      const response = await fetch('/api/user/register', {
+      const response = await fetch('/api/user/create-staff', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ ...staffData, role: 'staff' })
       })
+
+      console.log(response)
+
+      const data =await response.json();
+
+      console.log(data);
       
-      if (response.ok) {
+      
+      if (data.success&&response.ok) {
+        console.log('====================================');
+        console.log("Staff Member Added");
+        console.log(data);
+        
+        console.log('====================================');
         fetchStaff()
         setShowAddModal(false)
       }
@@ -45,7 +63,8 @@ const StaffList = () => {
   return (
     <div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 px-2 py-20 gap-8">
-        {staff.map(member => (
+        {staff && staff.length > 0 ? (
+        staff.map(member => (
           <div key={member._id} className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-shadow p-8">
             <div className="flex items-center mb-4">
               <div className="w-12 h-12 bg-[#FFD700] rounded-full flex items-center justify-center text-[#8B4513] text-xl">
@@ -79,7 +98,19 @@ const StaffList = () => {
               </button>
             </div>
           </div>
-        ))}
+        ))
+      ) : (
+          // ✅ Show message when no staff
+          <div className="col-span-full text-center py-12">
+            <p className="text-gray-500 text-lg">No staff members found</p>
+            <button 
+              onClick={() => setShowAddModal(true)}
+              className="mt-4 px-6 py-2 bg-[#D2691E] text-white rounded-lg hover:bg-[#B85E1A]"
+            >
+              + Add Your First Staff Member
+            </button>
+          </div>
+        )}
       </div>
       <div className="flex justify-between items-center mb-8 pb-4 border-b border-gray-200">
         <h1 className="text-3xl font-bold text-[#2F1B0A]">Staff Management</h1>

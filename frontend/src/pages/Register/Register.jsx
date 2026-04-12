@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import './Register.css'
-const Register = () => {
+const Register = ({user , setUser}) => {
 
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -31,9 +31,14 @@ const Register = () => {
       const response=await fetch("/api/user/register",{
       method:"POST",
       headers : {
+
         'Content-Type' : 'application/json'
       },
-      body:JSON.stringify(formData)
+      body:JSON.stringify({
+        username : formData.username,
+        email : formData.email,
+        password : formData.password
+      })
     })
 
     const data = await response.json();
@@ -41,7 +46,15 @@ const Register = () => {
 
     if (response.ok) {
       console.log("Navigating to dashboard with data:", data.data);
-      navigate("/dashboard", { state: { data: data.data } });
+      if (data.accessToken) {
+          localStorage.setItem("accessToken", data.accessToken);
+          console.log("✅ Token stored from registration");
+        }
+        localStorage.setItem("user", JSON.stringify(data.data));
+        console.log("✅ Registration successful! Redirecting to dashboard...");
+        setUser(data.data);
+        
+      navigate("/dashboard", { state: { user: data.data } });
     } else {
       console.error("Registration failed:", data);
       setError(data.message || "Registration failed");
@@ -50,6 +63,11 @@ const Register = () => {
     console.error("Fetch error:", error);
     setError("Network error. Please try again.");
     }
+  }
+
+  if (user) {
+    navigate("/dashboard");
+    return null;
   }
 
   return (

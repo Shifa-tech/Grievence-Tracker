@@ -1,12 +1,21 @@
-import React from 'react'
+import React ,{useEffect}  from 'react'
 import Features from '../../components/Cards/Features'
 import HowItWorks from '../../components/Cards/HowItWorks'
 import Stats from '../../components/Cards/Stats'
-import {Link} from "react-router-dom"
+import {Link , useNavigate} from "react-router-dom"
 import './Home.css'
-const Home = () => {
+const Home = ({user }) => {
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if (user) {
+      navigate("/dashboard", { state: { user: user } })
+    }
+  }, [user, navigate])
+
   return (
     <>
+    
       <section className="hero" id="home">
             <div className="container hero-content">
               <h2>Welcome to the Circus of Wonders Grievance Tracker</h2>

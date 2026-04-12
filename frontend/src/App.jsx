@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import { Routes, Route } from 'react-router-dom'
 import Home from './pages/Home/Home'
 import Login from './pages/Login/Login'
@@ -10,14 +10,26 @@ import SubmitComplaint from './pages/SubmitComplaint/SubmitComplaint'
 import './App.css'
 
 const App= ()=> {
-  const [user, setUser] = useState(null)
+  const [user, setUser] = useState(() => {          //Loads the last logged user
+    const savedUser = localStorage.getItem('user');
+    return savedUser ? JSON.parse(savedUser) : null;
+  });
+
+  //Save user to localStorage whenever it changes
+  useEffect(() => {
+    if (user) {
+      localStorage.setItem('user', JSON.stringify(user));
+    } else {
+      localStorage.removeItem('user');
+    }
+  }, [user]);
 
   return (
     <div className="App">
-      <Header/>
+      <Header user={user} setUser = {setUser}/>
       <main>
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<Home user={user}/>} />
           <Route path="/login" element={<Login user = {user} setUser={setUser} />} />
           <Route path="/register" element={<Register user = {user} setUser={setUser} />} />
           <Route path="/dashboard" element={<Dashboard user = {user} setUser={setUser}/>} />

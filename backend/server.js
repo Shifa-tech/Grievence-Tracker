@@ -7,6 +7,11 @@ import handleComplaint from "./handleComplaint.js";
 
 dotenv.config();
 
+if (!process.env.ACCESS_TOKEN || !process.env.REFRESH_TOKEN) {
+  console.error('❌ ERROR: ACCESS_TOKEN and REFRESH_TOKEN must be set in .env file');
+  process.exit(1);
+}
+
 const app=express();
 app.use(cors());                 //cors is used to connect react with backened
 app.use(express.json({limit:'10mb'}));

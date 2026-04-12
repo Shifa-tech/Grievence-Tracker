@@ -11,6 +11,12 @@ const AddStaff = ({ onClose, onAdd }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
+    console.log("📤 Submitting staff data:", formData)  // Debug log
+    
+    if (!formData.username || !formData.email || !formData.password) {
+      alert("Please fill all required fields")
+      return
+    }
     onAdd(formData)
   }
 
@@ -24,7 +30,8 @@ const AddStaff = ({ onClose, onAdd }) => {
                 <div className='px-5'>
                     <label className="block text-sm font-medium text-gray-700">Username</label>
                     <input 
-                    type="text" 
+                    type="text"
+                    name = "username" 
                     required
                     value={formData.username}
                     onChange={(e) => setFormData({...formData, username: e.target.value})}
@@ -36,6 +43,7 @@ const AddStaff = ({ onClose, onAdd }) => {
                     <input 
                     type="email" 
                     required
+                    name = "email"
                     value={formData.email}
                     onChange={(e) => setFormData({...formData, email: e.target.value})}
                     className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#D2691E] focus:ring focus:ring-[#D2691E]"
@@ -46,6 +54,7 @@ const AddStaff = ({ onClose, onAdd }) => {
                     <input 
                     type="password" 
                     required
+                    name="password"
                     value={formData.password}
                     onChange={(e) => setFormData({...formData, password: e.target.value})}
                     className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#D2691E] focus:ring focus:ring-[#D2691E]"
@@ -54,15 +63,17 @@ const AddStaff = ({ onClose, onAdd }) => {
                 <div>
                     <label className="block text-sm font-medium text-gray-700">Department</label>
                     <select 
+                    name = "department"
                     value={formData.department}
                     onChange={(e) => setFormData({...formData, department: e.target.value})}
                     className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#D2691E] focus:ring focus:ring-[#D2691E]"
                     >
                     <option value="">Select Department</option>
-                    <option value="maintenance">Maintenance</option>
-                    <option value="sanitation">Sanitation</option>
-                    <option value="security">Security</option>
-                    <option value="administration">Administration</option>
+                    <option value="road-damage">Road Damage</option>
+                    <option value="water-leakage">Sanitation</option>
+                    <option value="garbage">Garbage</option>
+                    <option value="safety">Security</option>
+                    <option value="electrical">Electrical</option>
                     </select>
                 </div>
                 </div>

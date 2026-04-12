@@ -1,12 +1,29 @@
-import React, { useState } from 'react'
-import { Link, useLocation ,useNavigate} from 'react-router-dom'
+import React, { useState , useEffect } from 'react'
+import { Link,useNavigate} from 'react-router-dom'
 import './Header.css'
 
-const Header = ({ user, setUser }) => {
+const Header = ({ user: propUser, setUser }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const location = useLocation()
+  const [user, setLocalUser] = useState(propUser)
   const navigate = useNavigate()
   
+  useEffect(() => {
+    setLocalUser(propUser)
+  }, [propUser])
+  
+  useEffect(() => {
+    if (!propUser) {
+      const storedUser = localStorage.getItem('user')
+      if (storedUser) {
+        const parsedUser = JSON.parse(storedUser)
+        setLocalUser(parsedUser)
+        if (setUser) {
+          setUser(parsedUser)
+        }
+      }
+    }
+  }, [propUser, setUser])
+
   const handleLogout = () => {
   localStorage.clear();
   setUser(null);
