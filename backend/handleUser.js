@@ -14,7 +14,7 @@ router.get("/staff", async(req,res)=>{
         
     } catch (error) {
         console.log("Error while fetching complaint");
-        console.error(err);
+        console.error(error);
         res.status(500).json([]);  
     }
 })
@@ -141,6 +141,7 @@ router.post("/create-staff", async (req, res) => {
   }
 });
 
+
 router.post("/register",async(req,res)=>{
     try{
     if (!req.body) {
@@ -161,13 +162,13 @@ router.post("/register",async(req,res)=>{
       $or: [{ username }, { email }] 
     });
 
-    const data = {
-          id: existingUser._id,  
-          role: existingUser.role,
-          username: existingUser.username,
-          email: existingUser.email}
-    
     if (existingUser) {
+      const data = {
+        id: existingUser._id,
+        role: existingUser.role,
+        username: existingUser.username,
+        email: existingUser.email
+      };
       return res.status(409).json({  
         success: false,
         message: "Username or email already registered",

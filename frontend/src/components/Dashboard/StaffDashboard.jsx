@@ -13,8 +13,8 @@ const StaffDashboard = ({ user }) => {
 
   const fetchAllComplaints = async () => {
     try {
-      const token = localStorage.getItem('token');
-      const response = await fetch('http://localhost:5000/api/complaints', {
+      const token = localStorage.getItem('accessToken');
+      const response = await fetch('/api/complaint', {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       const data = await response.json();
@@ -28,8 +28,8 @@ const StaffDashboard = ({ user }) => {
 
   const updateStatus = async (complaintId, newStatus) => {
     try {
-      const token = localStorage.getItem('token');
-      await fetch(`http://localhost:5000/api/complaints/${complaintId}/status`, {
+      const token = localStorage.getItem('accessToken');
+      await fetch(`/api/complaint/${complaintId}/status`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
@@ -50,7 +50,7 @@ const StaffDashboard = ({ user }) => {
   return (
     <div className="staff-dashboard">
       <h2>🛠️ Staff Dashboard</h2>
-      <p>Welcome, {user.name}! Manage all circus complaints.</p>
+      <p>Welcome, {user.username}! Manage all circus complaints.</p>
       
       <div className="dashboard-controls">
         <div className="filter-buttons">
@@ -93,7 +93,7 @@ const StaffDashboard = ({ user }) => {
                   <td>{complaint._id.substring(0, 8)}...</td>
                   <td>{complaint.title}</td>
                   <td>{complaint.userId?.username || 'Unknown'}</td>
-                  <td>{complaint.type}</td>
+                  <td>{complaint.category}</td>
                   <td>
                     <span className={`urgency-badge ${complaint.urgency}`}>
                       {complaint.urgency}
@@ -110,10 +110,9 @@ const StaffDashboard = ({ user }) => {
                       onChange={(e) => updateStatus(complaint._id, e.target.value)}
                       className="status-select"
                     >
-                      <option value="pending">Pending</option>
+                      <option value="open">Open</option>
                       <option value="in-progress">In Progress</option>
                       <option value="resolved">Resolved</option>
-                      <option value="closed">Closed</option>
                     </select>
                   </td>
                 </tr>

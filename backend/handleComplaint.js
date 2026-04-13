@@ -81,7 +81,8 @@ router.get('/',async(req,res)=>{
        res.json(complaint)
     }catch(error){
         console.log("Error while fetching complaint");
-        console.error(err);
+        console.error(error);
+        res.status(500).json({ message: "Error while fetching complaint" });
     }
 })
 
@@ -94,6 +95,8 @@ router.get(`/:userId`,async(req,res)=>{
             res.json(user_complaint)
     }catch(error){
         console.log("Error in retriving user complaint");
+        console.error(error);
+        res.status(500).json({ message: "Error retrieving user complaints" });
     }
 })
 router.patch('/',async(req,res)=>{
@@ -101,6 +104,34 @@ router.patch('/',async(req,res)=>{
 
     }catch(error){
         
+    }
+})
+router.patch('/:complaintId/status', async (req, res) => {
+    try {
+        const { complaintId } = req.params;
+        const { status } = req.body;
+
+        if (!["open", "in-progress", "resolved"].includes(status)) {
+            return res.status(400).json({ message: "Invalid status value" });
+        }
+
+        const updatedComplaint = await Complaint.findByIdAndUpdate(
+            complaintId,
+            { status },
+            { new: true }
+        );
+
+        if (!updatedComplaint) {
+            return res.status(404).json({ message: "Complaint not found" });
+        }
+
+        res.json({
+            message: "Complaint status updated successfully",
+            complaint: updatedComplaint
+        });
+    } catch (error) {
+        console.error("Error updating complaint status:", error);
+        res.status(500).json({ message: "Error updating complaint status" });
     }
 })
 export default router
