@@ -1,6 +1,7 @@
 import express from "express"
 import User from "./userSchema.js"
 import bcrypt from 'bcrypt'
+import Settings from "./settingsSchema.js"
 
 const router=express.Router();
 
@@ -150,7 +151,7 @@ router.post("/register",async(req,res)=>{
       });
     }
 
-    const {username,email,password}=req.body;
+    const {username,email,phone ,password}=req.body;
 
     if (!username || !email || !password) {
       return res.status(400).json({ 
@@ -183,6 +184,7 @@ router.post("/register",async(req,res)=>{
         role:"citizen",
         username:username,
         email:email,
+        phone:phone || '',
         password:hashedPassword,
         department:"none"
     })
@@ -199,6 +201,7 @@ router.post("/register",async(req,res)=>{
         role:"citizen",
         username:username,
         email:email,
+        phone :phone || '',
         department : "none"
     }
 
@@ -233,6 +236,116 @@ router.post("/logout", async (req, res) => {
   } catch (error) {
     console.error("Logout error:", error);
     res.status(500).json({ message: "Error during logout" });
+  }
+});
+
+router.get("/settings", async (req, res) => {
+  try {
+    let settings = await Settings.findOne();
+    console.log(settings);
+    console.log("Fetched Successfully");
+    
+    
+    if (!settings) {
+      settings = new Settings({});
+      await settings.save();
+    }
+    
+    res.json({
+      success: true,
+      settings: {
+        sla: settings.sla,
+        categories: settings.categories,
+        locations: settings.locations
+      }
+    });
+  } catch (error) {
+    res.status(500).json({ success: false, message: "Error fetching settings" });
+  }
+});
+
+router.put("/settings", async (req, res) => {                                   //This is for updating location adn categories by admin
+  try {
+    const { sla, categories, locations } = req.body;
+    
+    let settings = await Settings.findOne();
+    
+    if (!settings) {
+      settings = new Settings({});
+    }
+    
+    if (sla) settings.sla = sla;
+    if (categories) settings.categories = categories;
+    if (locations) settings.locations = locations;
+    
+    settings.updatedAt = new Date();
+    await settings.save();
+    
+    res.json({ success: true, message: "Settings saved successfully" });
+  } catch (error) {
+    res.status(500).json({ success: false, message: "Error saving settings" });
+  }
+});
+
+router.delete("/staff/:staffId", async (req, res) => {
+  try {
+    const { staffId } = req.params;
+    
+    const deletedStaff = await User.findByIdAndDelete(staffId);
+    
+    if (!deletedStaff) {
+      return res.status(404).json({ 
+        success: false, 
+        message: "Staff not found" 
+      });
+    }
+    
+    res.json({
+      success: true,
+      message: "Staff removed successfully",
+      staff: deletedStaff
+    });
+  } catch (error) {
+    console.error("Error removing staff:", error);
+    res.status(500).json({ 
+      success: false, 
+      message: "Server error removing staff" 
+    });
+  }
+});
+
+// Add this to handleUser.js
+router.put("/staff/:staffId", async (req, res) => {
+  try {
+    const { staffId } = req.params;
+    const { username, email, department, password } = req.body;
+    
+    const updateData = { username, email, department };
+    
+    // If password is provided, hash it
+    if (password && password.trim() !== '') {
+      const salt = await bcrypt.genSalt(10);
+      updateData.password = await bcrypt.hash(password, salt);
+    }
+    
+    const updatedStaff = await User.findByIdAndUpdate(
+      staffId,
+      updateData,
+      { new: true }
+    ).select('-password');
+    
+    if (!updatedStaff) {
+      return res.status(404).json({ success: false, message: "Staff not found" });
+    }
+    
+    res.json({
+      success: true,
+      message: "Staff updated successfully",
+      staff: updatedStaff
+    });
+  } catch (error) {
+    console.error("Error updating staff:", error);
+    res.status(500).json({ success: false, message: "Server error updating staff" });
   }
 });
 

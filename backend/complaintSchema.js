@@ -8,8 +8,7 @@ const complaint = new mongoose.Schema({
     },
     category:{
         type: String,
-        required : true,
-        enum : ["road-damage" , "water-leakage" , "garbage","electrical" , "safety" , "other"]
+        required : true
     },
 
     contactPreference:{
@@ -51,6 +50,9 @@ const complaint = new mongoose.Schema({
         ref:'User',
         required:'true'
     }
+},
+{
+    timestamps: true
 })
 const Complaint=mongoose.model('Complaint',complaint)
 export default Complaint

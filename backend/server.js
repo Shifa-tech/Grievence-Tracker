@@ -2,10 +2,14 @@ import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
 import dotenv from "dotenv"
+import paymentRoutes from './paymentRoutes.js'
 import handleUser from "./handleUser.js";
 import handleComplaint from "./handleComplaint.js";
 
 dotenv.config();
+
+console.log('RAZORPAY_KEY_ID:', process.env.RAZORPAY_KEY_ID ? '✅ Loaded' : '❌ Missing')
+console.log('RAZORPAY_KEY_SECRET:', process.env.RAZORPAY_KEY_SECRET ? '✅ Loaded' : '❌ Missing')
 
 if (!process.env.ACCESS_TOKEN || !process.env.REFRESH_TOKEN) {
   console.error('❌ ERROR: ACCESS_TOKEN and REFRESH_TOKEN must be set in .env file');
@@ -33,6 +37,7 @@ connectDB();
 
 app.use("/api/user",handleUser)
 app.use("/api/complaint",handleComplaint)
+app.use("/api/payment", paymentRoutes)
 
 // Error handling middleware
 app.use((err, req, res, next) => {

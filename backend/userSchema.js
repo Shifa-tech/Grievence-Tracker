@@ -25,6 +25,11 @@ const user = new mongoose.Schema({
         type: String,
         required: true,
     },
+    phone: {
+        type: String,
+        default: '',
+        trim: true
+    },
     department: {
         type: String,
         enum: ["road-damage", "water-leakage", "garbage", "electrical", "safety", "none"],

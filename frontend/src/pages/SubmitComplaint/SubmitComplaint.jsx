@@ -1,8 +1,8 @@
 import React, {useEffect, useState } from 'react'
 import { Navigate, useLocation } from 'react-router-dom'
 import ComplaintForm from '../../components/Forms/ComplaintForm'
-import './SubmitComplaint.css'
 import Header from '../../components/Master page elements/Header'
+import './SubmitComplaint.css'
 
 const SubmitComplaint = () => {
   const [complaintSubmitted, setComplaintSubmitted] = useState(false)

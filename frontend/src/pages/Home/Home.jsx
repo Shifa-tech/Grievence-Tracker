@@ -4,6 +4,7 @@ import HowItWorks from '../../components/Cards/HowItWorks'
 import Stats from '../../components/Cards/Stats'
 import {Link , useNavigate} from "react-router-dom"
 import './Home.css'
+
 const Home = ({user }) => {
   const navigate = useNavigate()
 
